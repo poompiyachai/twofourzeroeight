@@ -14,7 +14,9 @@ namespace twozerofoureight
     {
         Model model;
         Controller controller;
-       
+        int sum = 0;
+        int keepsum = 0;
+
         public TwoZeroFourEightView()
         {
             InitializeComponent();
@@ -35,8 +37,19 @@ namespace twozerofoureight
             if (i != 0)
             {
                 l.Text = Convert.ToString(i);
+                 if (i.ToString().Length == 4)
+                {
+                    l.Font = new Font("Microsoft Sans Serif", 14);
+                }
+                if (i.ToString().Length == 3){
+                    l.Font = new Font("Microsoft Sans Serif", 16);
+                                   }
+                if (i.ToString().Length == 2){
+                    l.Font = new Font("Microsoft Sans Serif", 20);
+                                    }
             } else {
                 l.Text = "";
+               
             }
             switch (i)
             {
@@ -75,6 +88,32 @@ namespace twozerofoureight
             UpdateTile(lbl31,board[3, 1]);
             UpdateTile(lbl32,board[3, 2]);
             UpdateTile(lbl33,board[3, 3]);
+
+            sum = 0;
+
+            for (int i = 0;i<=3;i++)
+            {
+                for(int j=0;j<=3; j++)
+                {
+                    sum += board[i, j];
+                }
+            }
+                 if(sum!=0)
+                    {
+
+                textBox1.Text = sum.ToString();
+                 keepsum = sum;
+              
+                     }
+            else
+            {
+                textBox1.Text = "gameover     " + "score = " + keepsum.ToString();
+            }
+
+                
+            
+            
+            
         }
 
         private void btnLeft_Click(object sender, EventArgs e)
@@ -97,5 +136,35 @@ namespace twozerofoureight
             controller.ActionPerformed(TwoZeroFourEightController.DOWN);
         }
 
+        private void TwoZeroFourEightView_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+         {
+             switch (keyData)
+             {
+                 case Keys.Up:
+                     controller.ActionPerformed(TwoZeroFourEightController.UP);
+                     break;
+                 case Keys.Right:
+                     controller.ActionPerformed(TwoZeroFourEightController.RIGHT);
+                     break;
+                 case Keys.Down:
+                     controller.ActionPerformed(TwoZeroFourEightController.DOWN);
+                     break;
+                 case Keys.Left:
+                     controller.ActionPerformed(TwoZeroFourEightController.LEFT);
+                     break;
+                 default:
+                     break;
+             }
+             return base.ProcessCmdKey(ref msg, keyData);
+         }
     }
 }
